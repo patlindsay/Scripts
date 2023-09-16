@@ -60,7 +60,7 @@ Get-ChildItem -Path ".\*.avi" -Recurse | Move-Item -Destination $organizedFolder
 Get-ChildItem -Path ".\*.wmv" -Recurse | Move-Item -Destination $organizedFolder + "\Videos"
 
 $currentFileCount = Write-Host (Get-ChildItem $messyFolder -Recurse | Measure-Object).Count
-Write-Progress -Activity "Organizing Folder" -Status "$($currentFileCount/$totalFileCount) Complete:" -PercentComplete $currentFileCount/$totalFileCount
+Write-Progress -Activity "Organizing Folder" -Status "$($currentFileCount/$totalFileCount) Complete:" -PercentComplete $currentFileCount/$totalFileCount #this calculation isn't going to work
 
 # Move Music
 Get-ChildItem -Path ".\*.mp3" -Recurse | Move-Item -Destination $organizedFolder + "\Music"\
@@ -71,4 +71,6 @@ Write-Progress -Activity "Organizing Folder" -Status "$($currentFileCount/$total
 
 #foreach item in $folderVariable
     #get metadata
-    #if
+    #if metadata.year folder doesn't exist, then create it
+        #if metadata.month doesn't exist, then create it
+    # move to metadata.year/metadata.month folder
