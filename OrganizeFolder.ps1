@@ -48,6 +48,25 @@ Write-Host "$totalFileCount Files to be organized into $organizedFolder"
 Write-Progress -Activity "Starting to organize folder" -Status "0% Complete:" -PercentComplete 0
 
 
+
+#Write Progress
+$currentFileCount = Write-Host (Get-ChildItem $messyFolder -Recurse | Measure-Object).Count
+Write-Progress -Activity "Organizing Folder" -Status "$(100 - ($currentFileCount/$totalFileCount)*100)) Complete:" -PercentComplete 100 - ($currentFileCount/$totalFileCount)*100)
+
+
+#foreach item in $folderVariable
+    #get metadata
+    #if metadata.year folder doesn't exist, then create it
+        #if metadata.month doesn't exist, then create it
+    # move to metadata.year/metadata.month folder
+
+
+#After sort, check for remaining files, if any are remaining, create new Unidentified Files
+#directory in top of $organizedFolder, then move any files into a newly created folders
+#that are named after their file extensions (i.e. ".txt Files", ".bmp files")
+
+
+
 ##Start moving files
 ## Move Pictures
 Get-ChildItem -Path ".\*.jpeg" -Recurse | Move-Item -Destination $organizedFolder + "\Pictures"
@@ -67,18 +86,3 @@ Write-Progress -Activity "Organizing Folder" -Status "$($currentFileCount/$total
 
 # Move Music
 Get-ChildItem -Path ".\*.mp3" -Recurse | Move-Item -Destination $organizedFolder + "\Music"\
-
-$currentFileCount = Write-Host (Get-ChildItem $messyFolder -Recurse | Measure-Object).Count
-Write-Progress -Activity "Organizing Folder" -Status "$($currentFileCount/$totalFileCount) Complete:" -PercentComplete $currentFileCount/$totalFileCount
-
-
-#foreach item in $folderVariable
-    #get metadata
-    #if metadata.year folder doesn't exist, then create it
-        #if metadata.month doesn't exist, then create it
-    # move to metadata.year/metadata.month folder
-
-
-#After sort, check for remaining files, if any are remaining, create new Unidentified Files
-#directory in top of $organizedFolder, then move any files into a newly created folders
-#that are named after their file extensions (i.e. ".txt Files", ".bmp files")
