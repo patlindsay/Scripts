@@ -10,11 +10,11 @@ Write-Host "Testing File Path: $messyFolder"
 
 if(!(Test-Path $messyFolder))
 {
-    Write-Host "Filepath invalid. Make sure it is in a `" `" format."
+    Write-Host "Source Filepath invalid. Make sure it is in a `" `" format."
     exit
 }
 
-Write-Host "Filepath is valid."
+Write-Host "Source Filepath is valid."
 
 
 
@@ -22,6 +22,7 @@ Write-Host "Filepath is valid."
 #in the same directory as the source folder
 if($PSBoundParameters.ContainsKey('destinationFilepath'))
 {
+    Write-Host "Checking Destination Filepath"
     $organizedFolder = $destinationFilepath
 }
 else
@@ -29,11 +30,13 @@ else
     $filepathArray = $messyFolder -split "\"
     $organizedFolder = ""
 
+    Write-Host "Creating Destination Filepath"
+
     for($i=0; $i -lt ($filepathArray.Length - 1); $i++)
     {
         $organizedFolder = $organizedFolder + $filepathArray[$i]
     }
-    #Create new folder
+    New-Item -Path $organizedFolder Directory
 }
 
 
@@ -74,3 +77,8 @@ Write-Progress -Activity "Organizing Folder" -Status "$($currentFileCount/$total
     #if metadata.year folder doesn't exist, then create it
         #if metadata.month doesn't exist, then create it
     # move to metadata.year/metadata.month folder
+
+
+#After sort, check for remaining files, if any are remaining, create new Unidentified Files
+#directory in top of $organizedFolder, then move any files into a newly created folders
+#that are named after their file extensions (i.e. ".txt Files", ".bmp files")
